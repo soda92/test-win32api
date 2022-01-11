@@ -1,20 +1,17 @@
 #include <windows.h>
 #include <stdio.h>
-
+#define bufsize 512
 int main()
 {
-    char szLogicalDriveStrings[BUFSIZ] = "";
-    GetLogicalDriveStrings(BUFSIZ - 1, szLogicalDriveStrings);
-    char *pDrive = szLogicalDriveStrings;
-    UINT uDriveType;
-    while (strlen(pDrive) != 0)
+    char disks[bufsize] = "";
+    GetLogicalDriveStrings(bufsize - 1, disks);
+    char *disk = disks;
+    while (strlen(disk) != 0)
     {
-        uDriveType = GetDriveType(pDrive);
-        //DRIVE_UNKNOWN
-        if (uDriveType == DRIVE_REMOVABLE)
+        if (GetDriveType(disk) == DRIVE_REMOVABLE)
         {
-            printf("%s\n", pDrive);
+            printf("%s\n", disk);
         }
-        pDrive += strlen(pDrive) + 1;
+        disk += strlen(disk) + 1;
     }
 }
